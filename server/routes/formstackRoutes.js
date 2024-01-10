@@ -66,7 +66,7 @@ router
         try {
             const result = await axios.post(
                 `${baseUrl}/form`,
-                { name: formName, fields: ["field1", "field2"] },
+                { name: formName },
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -78,18 +78,37 @@ router
             res.json(result.data);
         } catch (e) {
             console.error(e);
-            res.status(500).send(e.messages);
+            res.status(500).send(e.message);
+        }
+    })
+    .post("/create/:id/field/:token", async (req, res) => {
+        const { id, token } = req.params;
+        const {
+            field: { type, label, required = false, colspan = 1, sort },
+        } = req.body;
+        console.log(req.body);
+        try {
+            const result = await axios.post(
+                `${baseUrl}/form/${id}/field`,
+                {
+                    field_type: type,
+                    label,
+                    required,
+                    colspan,
+                    sort,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            res.json(result.data);
+        } catch (e) {
+            res.status(500).send(e);
         }
     });
-// .post('/:id/edit/:token', async (req, res) => {
-//   const { id, token } = req.params
-
-//   try {
-//     const result = await axios.put(`${baseUrl}/form/${id}`, {})
-//   } catch (e) {
-//     console.error(e)
-//     res.status(500).send(e)
-//   }
-// })
 
 export default router;
