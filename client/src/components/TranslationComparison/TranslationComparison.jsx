@@ -1,20 +1,58 @@
-import { useCreateFormMutation } from "../../app/services/formstack";
+import {
+  useCreateFormMutation,
+  useCreateFieldMutation,
+} from "../../app/services/formstack";
+
+import BeatLoader from "react-spinners/BeatLoader";
 
 import * as Styled from "./styles";
 
 import { Button } from "..";
 
-const TranslationComparison = ({ userToken, translatedFormFields }) => {
+const TranslationComparison = ({
+  userToken,
+  formData,
+  translatedFormFields,
+  language,
+  translatedFormId,
+  handleTranslatedFormId,
+  handleTranslatedForm,
+}) => {
   const [createForm, { data, isLoading }] = useCreateFormMutation();
+  const [createField] = useCreateFieldMutation();
 
   const createTranslatedForm = async () => {
-    createForm({
-      token: userToken,
-      formName: "Translated Form",
-      formFields: translatedFormFields,
-    });
+    try {
+      // Await the completion of the createForm call
+      const createFormResponse = await createForm({
+        token: userToken,
+        formName: `${formData.name} - ${language} Version`,
+      }).unwrap();
 
-    console.log("Form Created");
+      // Check if the form was successfully created and get the form ID
+      if (createFormResponse && createFormResponse.id) {
+        const formId = createFormResponse.id;
+        console.log(formId);
+        // Use formId in createField calls
+        translatedFormFields.forEach(async (field) => {
+          await createField({
+            token: userToken,
+            formId: formId,
+            field: {
+              label: field.translatedLabel,
+              type: field.type,
+              colspan: field.colspan,
+            },
+          });
+        });
+
+        console.log("Form and fields created");
+        handleTranslatedFormId(formId);
+        handleTranslatedForm(true);
+      }
+    } catch (error) {
+      console.error("Error creating form or fields:", error);
+    }
   };
 
   return (

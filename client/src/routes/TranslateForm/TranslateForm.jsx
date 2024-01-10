@@ -1,48 +1,47 @@
-import { useState, useEffect } from "react";
-import { useGetTranslationMutation } from "../../app/services/openAi";
+import { useGetFormsQuery } from "../../app/services/formstack";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { userSelector } from "../../app/features/auth";
 
 import BeatLoader from "react-spinners/BeatLoader";
 
 const TranslateForm = () => {
-  const [getTranslation, { data, isLoading, error: translationError }] =
-    useGetTranslationMutation();
+  const {
+    user: { token },
+    isAuthenticated,
+  } = useSelector(userSelector);
+  const navigate = useNavigate();
 
-  const [translation, setTranslation] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data, isLoading } = useGetFormsQuery(token);
 
-  useEffect(() => {
-    const fetchTranslation = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/translate`);
+  const handleFormSelect = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    navigate(`/forms/${e.target.value}`);
+  };
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+  if (!isAuthenticated)
+    return (
+      <section>
+        <p>Log in to your Formstack account to see your Forms here!</p>
+      </section>
+    );
 
-        const data = await response.json();
-        setTranslation(data);
-      } catch (e) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTranslation();
-  }, []);
-
-  if (loading) return <BeatLoader />;
-  if (error) return <p>Error: {error}</p>;
+  if (isLoading) return <BeatLoader />;
 
   return (
     <>
-      <h1>Translate Form</h1>
-      {translation && (
-        <div>
-          <p>Translation: {translation.response}</p>
-        </div>
-      )}
+      <h1>Select a Form to Translate!</h1>
+      <div>
+        <select onChange={handleFormSelect}>
+          {data?.forms?.map((form) => (
+            <option key={form?.id} value={form?.id}>
+              {form?.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Dropdown Pulls all Forms; Handler Select Form and then Redirect to /form/id */}
     </>

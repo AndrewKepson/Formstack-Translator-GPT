@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { userSelector } from "../../app/features/auth";
@@ -21,15 +21,25 @@ const Form = () => {
     getTranslation,
     { data: translationData, isLoading: isTranslationLoading },
   ] = useGetTranslationMutation();
-  console.log(data);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({});
   const [formFields, setFormFields] = useState([]);
   const [fieldTranslations, setFieldTranslations] = useState([]);
   const [translationLanguage, setTranslationLanguage] = useState("English");
+  const [hasFieldTranslations, setHasFieldTranslations] = useState(false);
   const [hasTranslatedForm, setHasTranslatedForm] = useState(false);
+  const [translatedFormId, setTranslatedFormId] = useState("");
 
   useEffect(() => {
     if (data) {
+      setFormData({
+        id: data?.id,
+        name: data?.name,
+        columns: data?.num_columns,
+        submitButtonTitle: data?.submit_button_title,
+      });
+
       setFormFields(
         data?.fields
           .filter((field) => field.label !== "")
@@ -49,8 +59,19 @@ const Form = () => {
   );
 
   useEffect(() => {
+    console.log(`Form Data: ${formData.name}`);
+  }, [formData]);
+
+  useEffect(() => {
     console.log(`Updated translation data: ${formFields}`);
   }, [formFields]);
+
+  useEffect(() => {
+    if (hasFieldTranslations) {
+      setHasFieldTranslations(false);
+      navigate(`/forms/${translatedFormId}`);
+    }
+  }, [hasTranslatedForm]);
 
   const handleSelectTranslationLanguage = (e) => {
     const language = e.target.value;
@@ -75,7 +96,7 @@ const Form = () => {
       }));
 
       setFieldTranslations(updatedTranslations);
-      setHasTranslatedForm(true);
+      setHasFieldTranslations(true);
     } catch (error) {
       console.error("Translation error:", error);
     }
@@ -83,11 +104,16 @@ const Form = () => {
 
   if (isLoading || isTranslationLoading) return <BeatLoader />;
 
-  if (hasTranslatedForm)
+  if (hasFieldTranslations)
     return (
       <TranslationComparison
         userToken={token}
+        formData={formData}
         translatedFormFields={fieldTranslations}
+        language={translationLanguage}
+        translatedFormId={translatedFormId}
+        handleTranslatedFormId={setTranslatedFormId}
+        handleTranslatedForm={setHasTranslatedForm}
       />
     );
 
