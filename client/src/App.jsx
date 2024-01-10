@@ -5,9 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { setUser } from "./app/features/auth";
 
 import { Layout } from "./components";
-import { Authorization, Forms } from "./routes";
-
-import "./App.css";
+import { Authorization, Forms, Form, TranslateForm } from "./routes";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,7 +24,13 @@ const App = () => {
     <Layout>
       <Routes>
         <Route path="/authorization" element={<Authorization />} />
-        <Route path="/forms" element={<Forms />} />
+        <Route path="/forms">
+          <Route index element={<Forms />} />
+          <Route path=":id">
+            <Route index element={<Form />} />
+          </Route>
+        </Route>
+        <Route path="/translate" element={<TranslateForm />} />
       </Routes>
     </Layout>
   );

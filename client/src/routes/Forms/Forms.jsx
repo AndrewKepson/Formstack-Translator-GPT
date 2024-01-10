@@ -9,7 +9,7 @@ const Forms = () => {
   const { user, isAuthenticated } = useSelector(userSelector);
 
   const { data } = useGetFormsQuery(user.token);
-
+  console.log(data);
   if (!isAuthenticated)
     return (
       <section>
@@ -23,7 +23,9 @@ const Forms = () => {
         <h1>My Forms</h1>
         <Styled.Forms>
           {data?.forms?.map((form) => (
-            <div key={form.id} form={form} />
+            <div key={form?.id}>
+              <a href={`/forms/${form?.id}`}>{form?.name}</a>
+            </div>
           ))}
           {/* Add delete button & edit button */}
         </Styled.Forms>

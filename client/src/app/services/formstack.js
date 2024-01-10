@@ -15,8 +15,19 @@ export const formstackApi = createApi({
     getFormSubmissions: build.query({
       query: ({ id, token }) => `/${id}/submissions/${token}`,
     }),
+    createForm: build.mutation({
+      query: ({ token, formName, formFields }) => ({
+        url: `/create/${token}`,
+        method: "POST",
+        body: { formName, formFields },
+      }),
+    }),
   }),
 });
 
-export const { useGetFormsQuery, useGetFormQuery, useGetFormSubmissionsQuery } =
-  formstackApi;
+export const {
+  useGetFormsQuery,
+  useGetFormQuery,
+  useGetFormSubmissionsQuery,
+  useCreateFormMutation,
+} = formstackApi;
