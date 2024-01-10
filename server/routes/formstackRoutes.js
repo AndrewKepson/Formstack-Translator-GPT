@@ -61,23 +61,24 @@ router
     })
     .post("/create/:token", async (req, res) => {
         const { token } = req.params;
-        const { data } = req.body;
-
+        const { formName, formFields } = req.body;
+        console.log(req.body);
         try {
             const result = await axios.post(
                 `${baseUrl}/form`,
+                { name: formName, fields: ["field1", "field2"] },
                 {
                     headers: {
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                },
-                data
+                }
             );
 
             res.json(result.data);
         } catch (e) {
             console.error(e);
-            res.status(500).send(e);
+            res.status(500).send(e.messages);
         }
     });
 // .post('/:id/edit/:token', async (req, res) => {
