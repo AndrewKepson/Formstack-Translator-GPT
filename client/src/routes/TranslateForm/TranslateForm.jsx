@@ -120,9 +120,10 @@ const TranslateForm = () => {
     );
 
   return (
-    <Styled.TranslationContainer>
+    <Styled.Page>
       <Styled.Wrapper>
         <Styled.FormFieldsContainer>
+          <h1>Form Fields to Translate</h1>
           {data?.fields?.map((field) => (
             <div key={field?.id}>
               <p>{field?.label}</p>
@@ -133,9 +134,8 @@ const TranslateForm = () => {
           ))}
         </Styled.FormFieldsContainer>
         <Styled.TranslationContainer>
-          <p>Translate to:</p>
+          <p>Translate This Form To:</p>
           <select onChange={(e) => handleSelectTranslationLanguage(e)}>
-            <option value="English">English</option>
             <option value="Spanish">Spanish</option>
             <option value="German">German</option>
             <option value="French">French</option>
@@ -144,10 +144,10 @@ const TranslateForm = () => {
             <option value="Mandarin">Mandarin</option>
             {/* Add more language options as needed */}
           </select>
-          <Button text="Translate" handler={handleTranslation} />
+          <Button text="Translate Form" handler={handleTranslation} />
         </Styled.TranslationContainer>
       </Styled.Wrapper>
-    </Styled.TranslationContainer>
+    </Styled.Page>
   );
 };
 

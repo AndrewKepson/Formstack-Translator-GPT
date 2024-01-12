@@ -2,10 +2,18 @@ import styled from "styled-components";
 
 export const Container = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin: auto;
   /* width: 100%; */
   padding-top: 0.5rem;
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    align-items: center;
+  }
 `;
 
 export const Wrapper = styled.div`

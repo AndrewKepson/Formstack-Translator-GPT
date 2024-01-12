@@ -23,10 +23,6 @@ const Header = () => {
       name: "My Forms",
       uri: "/forms",
     },
-    {
-      name: "Translate a Form",
-      uri: "/translate",
-    },
   ];
 
   return (

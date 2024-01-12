@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import { setUser } from "./app/features/auth";
 
@@ -23,14 +23,11 @@ const App = () => {
   return (
     <Layout>
       <Routes>
+        <Route path="/" element={<Navigate replace to="/forms" />} />
         <Route path="/authorization" element={<Authorization />} />
-        <Route path="/forms">
-          <Route index element={<Forms />} />
-          <Route path=":id" element={<Form />}>
-            <Route path="translate" element={<TranslateForm />} />
-          </Route>
-        </Route>
-        <Route path="/translate" element={<TranslateForm />} />
+        <Route path="/forms" element={<Forms />} />
+        <Route path="/forms/:id" element={<Form />} />
+        <Route path="/forms/:id/translate" element={<TranslateForm />} />
       </Routes>
     </Layout>
   );

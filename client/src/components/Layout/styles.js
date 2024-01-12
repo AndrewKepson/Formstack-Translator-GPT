@@ -5,5 +5,4 @@ export const Main = styled.main`
   height: -moz-available;
   height: -webkit-fill-available;
   height: fill-available;
-  padding: 0px 0.5rem;
 `;
