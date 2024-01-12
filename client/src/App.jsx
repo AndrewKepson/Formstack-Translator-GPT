@@ -26,8 +26,8 @@ const App = () => {
         <Route path="/authorization" element={<Authorization />} />
         <Route path="/forms">
           <Route index element={<Forms />} />
-          <Route path=":id">
-            <Route index element={<Form />} />
+          <Route path=":id" element={<Form />}>
+            <Route path="translate" element={<TranslateForm />} />
           </Route>
         </Route>
         <Route path="/translate" element={<TranslateForm />} />

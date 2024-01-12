@@ -3,6 +3,8 @@ import { useGetFormsQuery } from "../../app/services/formstack";
 
 import { userSelector } from "../../app/features/auth";
 
+import InterpreterModeIcon from "@mui/icons-material/InterpreterMode";
+
 import * as Styled from "./styles";
 
 const Forms = () => {
@@ -23,9 +25,15 @@ const Forms = () => {
         <h1>My Forms</h1>
         <Styled.Forms>
           {data?.forms?.map((form) => (
-            <div key={form?.id}>
-              <a href={`/forms/${form?.id}`}>{form?.name}</a>
-            </div>
+            <Styled.FormContainer key={form?.id}>
+              <Styled.FormLink href={`/forms/${form?.id}`}>
+                {form?.name}
+              </Styled.FormLink>
+              <Styled.TranslateButton href={`/forms/${form?.id}/translate`}>
+                Translate
+                <InterpreterModeIcon />
+              </Styled.TranslateButton>
+            </Styled.FormContainer>
           ))}
           {/* Add delete button & edit button */}
         </Styled.Forms>

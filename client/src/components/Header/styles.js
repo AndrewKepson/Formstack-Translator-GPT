@@ -15,11 +15,8 @@ export const Logo = styled.img`
 
 export const Nav = styled.nav`
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
 `;
 export const NavLogo = styled.li`
   grid-column: span 12 / span 12;
@@ -41,7 +38,7 @@ export const FlyOutMenu = styled.div`
 
 export const NavGroup = styled.ul`
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
   margin: 0;
@@ -58,15 +55,15 @@ export const NavGroup = styled.ul`
 `;
 
 export const NavMenuItem = styled.li`
-  grid-column: span 4 / span 4;
+  /* grid-column: span 3 / span 3; */
 
-  @media (min-width: 720px) {
+  /* @media (min-width: 720px) {
     grid-column: span 2 / span 2;
   }
 
   @media (min-width: 1024px) {
     grid-column: span 2 / span 2;
-  }
+  } */
 `;
 
 export const NavLink = styled(Link)`
@@ -82,9 +79,9 @@ export const NavLink = styled(Link)`
 `;
 
 export const NavButton = styled.li`
-  grid-column: span 6 / span 6;
+  /* grid-column: span 6 / span 6;
 
   @media (min-width: 720px) {
     grid-column: span 2 / span 2;
-  }
+  } */
 `;

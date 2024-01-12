@@ -32,10 +32,10 @@ const Header = () => {
   return (
     <Styled.Header>
       <Styled.Nav>
+        <Styled.NavLogo>
+          <Styled.Logo src={logo} onClick={() => navigate(`/`)} />
+        </Styled.NavLogo>
         <Styled.NavGroup>
-          <Styled.NavLogo>
-            <Styled.Logo src={logo} onClick={() => navigate(`/`)} />
-          </Styled.NavLogo>
           {menuItems.map((menuItem) => (
             <Styled.NavMenuItem key={menuItem.name}>
               <Styled.NavLink to={menuItem.uri}>{menuItem.name}</Styled.NavLink>
@@ -53,9 +53,6 @@ const Header = () => {
 
           {isAuthenticated ? (
             <>
-              <Styled.NavButton>
-                <Button text="Profile" navigateTo="/profile" />
-              </Styled.NavButton>
               <Styled.NavButton>
                 <Button text="Log Out" handler={handleLogout} />
               </Styled.NavButton>

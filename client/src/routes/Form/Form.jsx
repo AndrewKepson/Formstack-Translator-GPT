@@ -53,19 +53,6 @@ const Form = () => {
     }
   }, [data]);
 
-  useEffect(
-    () => console.log(`New Translation Language Set: ${translationLanguage}`),
-    [translationLanguage]
-  );
-
-  useEffect(() => {
-    console.log(`Form Data: ${formData.name}`);
-  }, [formData]);
-
-  useEffect(() => {
-    console.log(`Updated translation data: ${formFields}`);
-  }, [formFields]);
-
   useEffect(() => {
     if (hasFieldTranslations) {
       setHasFieldTranslations(false);

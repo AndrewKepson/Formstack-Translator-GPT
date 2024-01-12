@@ -3,8 +3,6 @@ import {
   useCreateFieldMutation,
 } from "../../app/services/formstack";
 
-import BeatLoader from "react-spinners/BeatLoader";
-
 import * as Styled from "./styles";
 
 import { Button } from "..";
