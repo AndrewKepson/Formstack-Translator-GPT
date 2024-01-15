@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../../app/features/auth";
 import { useGetFormQuery } from "../../app/services/formstack";
 import { useGetTranslationMutation } from "../../app/services/openAi";
+import { supportedLanguages } from "../../app/store";
 
 import BeatLoader from "react-spinners/BeatLoader";
 
@@ -33,12 +34,6 @@ const TranslateForm = () => {
   const [hasTranslatedForm, setHasTranslatedForm] = useState(false);
   const [translatedFormId, setTranslatedFormId] = useState("");
 
-  const handleFormSelect = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    navigate(`/forms/${e.target.value}`);
-  };
-
   useEffect(() => {
     if (data) {
       setFormData({
@@ -55,11 +50,20 @@ const TranslateForm = () => {
             id: field.id,
             label: field.label,
             type: field.type,
+            subfields:
+              field?.visible_subfields?.map((subfield, index) => ({
+                index,
+                label: subfield,
+              })) || [],
             colspan: field.colspan,
           }))
       );
     }
   }, [data]);
+
+  useEffect(() => {
+    console.log(formFields);
+  }, [formFields]);
 
   useEffect(() => {
     if (hasFieldTranslations) {
@@ -136,13 +140,11 @@ const TranslateForm = () => {
         <Styled.TranslationContainer>
           <p>Translate This Form To:</p>
           <select onChange={(e) => handleSelectTranslationLanguage(e)}>
-            <option value="Spanish">Spanish</option>
-            <option value="German">German</option>
-            <option value="French">French</option>
-            <option value="Icelandic">Icelandic</option>
-            <option value="Hebrew">Hebrew</option>
-            <option value="Mandarin">Mandarin</option>
-            {/* Add more language options as needed */}
+            {supportedLanguages.map((language) => (
+              <option key={language} value={language}>
+                {language}
+              </option>
+            ))}
           </select>
           <Button text="Translate Form" handler={handleTranslation} />
         </Styled.TranslationContainer>

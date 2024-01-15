@@ -20,9 +20,18 @@ export const Nav = styled.nav`
 `;
 export const NavLogo = styled.li`
   grid-column: span 12 / span 12;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 1rem;
 
   @media (min-width: 1024px) {
     grid-column: span 2 / span 2;
+  }
+
+  h2 {
+    position: relative;
+    top: -12px;
   }
 `;
 
@@ -38,12 +47,17 @@ export const FlyOutMenu = styled.div`
 
 export const NavGroup = styled.ul`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   justify-items: center;
   align-items: center;
   margin: 0;
   width: 100%;
   list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: row;
+  }
 
   li ${FlyOutMenu} {
     display: none;
@@ -51,6 +65,10 @@ export const NavGroup = styled.ul`
 
   li &:hover ${FlyOutMenu} {
     display: absolute;
+  }
+
+  li:not(:first-child) {
+    justify-content: flex-end;
   }
 `;
 

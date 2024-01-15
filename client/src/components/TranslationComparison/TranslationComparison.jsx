@@ -30,8 +30,7 @@ const TranslationComparison = ({
       // Check if the form was successfully created and get the form ID
       if (createFormResponse && createFormResponse.id) {
         const formId = createFormResponse.id;
-        console.log(formId);
-        // Use formId in createField calls
+
         translatedFormFields.forEach(async (field) => {
           await createField({
             token: userToken,
@@ -44,7 +43,6 @@ const TranslationComparison = ({
           });
         });
 
-        console.log("Form and fields created");
         handleTranslatedFormId(formId);
         handleTranslatedForm(true);
       }

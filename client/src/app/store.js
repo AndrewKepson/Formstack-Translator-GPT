@@ -16,3 +16,21 @@ export default configureStore({
       .concat(formstackApi.middleware)
       .concat(openAiApi.middleware),
 });
+
+export const supportedLanguages = [
+  "Spanish",
+  "German",
+  "French",
+  "Italian",
+  "Polish",
+  "Icelandic",
+  "Hebrew",
+  "Syriac",
+  "Koine Greek",
+  "Mandarin",
+  "Japanese",
+  "Korean",
+  "Arabic",
+  "Russian",
+  "Hindi",
+];

@@ -29,7 +29,8 @@ const Header = () => {
     <Styled.Header>
       <Styled.Nav>
         <Styled.NavLogo>
-          <Styled.Logo src={logo} onClick={() => navigate(`/`)} />
+          <Styled.Logo src={logo} onClick={() => navigate(`/`)} />{" "}
+          <h2>Translation Tool</h2>
         </Styled.NavLogo>
         <Styled.NavGroup>
           {menuItems.map((menuItem) => (
