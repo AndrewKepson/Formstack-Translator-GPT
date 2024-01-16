@@ -19,7 +19,6 @@ router
                 ],
                 model: "gpt-3.5-turbo",
             });
-            console.log(chatCompletion.choices);
 
             const assistantResponse = chatCompletion.choices[0].message.content;
 
@@ -36,7 +35,7 @@ router
                 messages: [
                     {
                         role: "user",
-                        content: `Translate this into ${language}: ${translationText}.`,
+                        content: `Translate the following phrase from English into ${language}: ${translationText}. Return only the translated text with matching punctuation.`,
                     },
                 ],
                 model: "gpt-3.5-turbo",

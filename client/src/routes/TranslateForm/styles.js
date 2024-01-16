@@ -85,3 +85,13 @@ export const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
+export const DisplayedField = styled.div`
+  & p:first-child {
+    font-weight: bold;
+  }
+
+  & p:not(:first-child) {
+    padding-left: 1rem;
+  }
+`;

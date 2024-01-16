@@ -66,6 +66,10 @@ const TranslateForm = () => {
   }, [formFields]);
 
   useEffect(() => {
+    console.log(fieldTranslations);
+  }, [fieldTranslations]);
+
+  useEffect(() => {
     if (hasFieldTranslations) {
       setHasFieldTranslations(false);
       navigate(`/forms/${translatedFormId}`);
@@ -80,19 +84,50 @@ const TranslateForm = () => {
 
   const handleTranslation = async () => {
     try {
-      const translationPromises = formFields.map((field) =>
-        getTranslation({
+      const translationRequests = formFields.flatMap((field) => {
+        // Translate the main field
+        const mainFieldTranslation = getTranslation({
           translationText: field.label,
           language: translationLanguage,
-        }).unwrap()
-      );
+        }).unwrap();
 
-      const translations = await Promise.all(translationPromises);
+        // Translate subfields if they exist
+        const subfieldTranslations = field.subfields.map((subfield) =>
+          getTranslation({
+            translationText: subfield.label,
+            language: translationLanguage,
+          }).unwrap()
+        );
 
-      const updatedTranslations = translations.map((t, index) => ({
-        ...formFields[index],
-        translatedLabel: t.response,
-      }));
+        return [mainFieldTranslation, ...subfieldTranslations];
+      });
+
+      const translations = await Promise.all(translationRequests);
+
+      // Process translations and update state
+      let translationIndex = 0;
+      const updatedTranslations = formFields.map((field) => {
+        const translatedField = {
+          ...field,
+          translatedLabel: translations[translationIndex].response,
+        };
+        translationIndex++;
+
+        if (field.subfields) {
+          translatedField.translatedSubfields = field.subfields.map(
+            (subfield) => {
+              const translatedSubfield = {
+                ...subfield,
+                translatedLabel: translations[translationIndex].response,
+              };
+              translationIndex++;
+              return translatedSubfield;
+            }
+          );
+        }
+
+        return translatedField;
+      });
 
       setFieldTranslations(updatedTranslations);
       setHasFieldTranslations(true);
@@ -129,20 +164,20 @@ const TranslateForm = () => {
         <Styled.FormFieldsContainer>
           <h1>Form Fields to Translate</h1>
           {data?.fields?.map((field) => (
-            <div key={field?.id}>
+            <Styled.DisplayedField key={field?.id}>
               <p>{field?.label}</p>
-              {translationData && field.id === translationData.fieldId && (
-                <p>Translation: {translationData.translation}</p>
-              )}
-            </div>
+              {field?.visible_subfields?.map((subfield) => (
+                <p key={subfield}>{subfield}</p>
+              ))}
+            </Styled.DisplayedField>
           ))}
         </Styled.FormFieldsContainer>
         <Styled.TranslationContainer>
           <p>Translate This Form To:</p>
           <select onChange={(e) => handleSelectTranslationLanguage(e)}>
             {supportedLanguages.map((language) => (
-              <option key={language} value={language}>
-                {language}
+              <option key={language.name} value={language.code}>
+                {language.name}
               </option>
             ))}
           </select>

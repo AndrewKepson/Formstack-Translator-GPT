@@ -16,10 +16,10 @@ export const formstackApi = createApi({
       query: ({ id, token }) => `/${id}/submissions/${token}`,
     }),
     createForm: build.mutation({
-      query: ({ token, formName, formFields }) => ({
+      query: ({ token, formName, formFields, language = "es" }) => ({
         url: `/create/${token}`,
         method: "POST",
-        body: { formName, formFields },
+        body: { formName, formFields, language },
       }),
     }),
     createField: build.mutation({
