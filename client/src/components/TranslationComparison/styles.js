@@ -52,3 +52,13 @@ export const FormFieldsDisplay = styled.div`
   padding: 1rem;
   background-color: #f5f5f5;
 `;
+
+export const DisplayedField = styled.div`
+  & p:first-child {
+    font-weight: bold;
+  }
+
+  & p:not(:first-child) {
+    padding-left: 1rem;
+  }
+`;

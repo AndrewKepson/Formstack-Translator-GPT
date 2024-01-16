@@ -1,3 +1,4 @@
+import React from "react";
 import {
   useCreateFormMutation,
   useCreateFieldMutation,
@@ -25,6 +26,7 @@ const TranslationComparison = ({
       const createFormResponse = await createForm({
         token: userToken,
         formName: `${formData.name} - ${language} Version`,
+        language: language,
       }).unwrap();
 
       // Check if the form was successfully created and get the form ID
@@ -57,13 +59,25 @@ const TranslationComparison = ({
         <Styled.FormFieldsDisplay>
           <h2>Original Language</h2>
           {translatedFormFields.map((field) => (
-            <p key={field.id}>{field.label}</p>
+            <Styled.DisplayedField key={field?.id}>
+              <p>{field?.label}</p>
+              {field?.subfields?.map((subfield) => (
+                <p key={subfield?.label}>{subfield?.label}</p>
+              ))}
+            </Styled.DisplayedField>
           ))}
         </Styled.FormFieldsDisplay>
         <Styled.FormFieldsDisplay>
           <h2>Translated Language</h2>
           {translatedFormFields.map((field) => (
-            <p key={field.id}>{field.translatedLabel}</p>
+            <Styled.DisplayedField key={field?.id}>
+              <p>{field?.translatedLabel}</p>
+              {field?.translatedSubfields?.map((subfield) => (
+                <p key={subfield?.translatedLabel}>
+                  {subfield.translatedLabel}
+                </p>
+              ))}
+            </Styled.DisplayedField>
           ))}
         </Styled.FormFieldsDisplay>
       </Styled.FormsComparisonContainer>
