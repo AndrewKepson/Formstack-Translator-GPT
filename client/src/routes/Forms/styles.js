@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 1.5rem 1rem;
+
+  h1 {
+    position: relative;
+    left: 2rem;
+  }
 `;
 
 export const Forms = styled.div`
@@ -9,7 +14,7 @@ export const Forms = styled.div`
   grid-template-columns: 1fr;
   place-content: center;
   gap: 1.25rem;
-  margin-top: 2rem;
+  margin: 2rem;
   max-width: 800px;
 `;
 

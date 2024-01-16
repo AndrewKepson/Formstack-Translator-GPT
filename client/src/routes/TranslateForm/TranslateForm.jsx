@@ -29,7 +29,7 @@ const TranslateForm = () => {
   const [formData, setFormData] = useState({});
   const [formFields, setFormFields] = useState([]);
   const [fieldTranslations, setFieldTranslations] = useState([]);
-  const [translationLanguage, setTranslationLanguage] = useState("English");
+  const [translationLanguage, setTranslationLanguage] = useState("Spanish");
   const [hasFieldTranslations, setHasFieldTranslations] = useState(false);
   const [hasTranslatedForm, setHasTranslatedForm] = useState(false);
   const [translatedFormId, setTranslatedFormId] = useState("");
@@ -163,14 +163,16 @@ const TranslateForm = () => {
       <Styled.Wrapper>
         <Styled.FormFieldsContainer>
           <h1>Form Fields to Translate</h1>
-          {data?.fields?.map((field) => (
-            <Styled.DisplayedField key={field?.id}>
-              <p>{field?.label}</p>
-              {field?.visible_subfields?.map((subfield) => (
-                <p key={subfield}>{subfield}</p>
-              ))}
-            </Styled.DisplayedField>
-          ))}
+          <Styled.TranslationDisplay>
+            {data?.fields?.map((field) => (
+              <Styled.DisplayedField key={field?.id}>
+                <p>{field?.label}</p>
+                {field?.visible_subfields?.map((subfield) => (
+                  <p key={subfield}>{subfield}</p>
+                ))}
+              </Styled.DisplayedField>
+            ))}
+          </Styled.TranslationDisplay>
         </Styled.FormFieldsContainer>
         <Styled.TranslationContainer>
           <p>Translate This Form To:</p>

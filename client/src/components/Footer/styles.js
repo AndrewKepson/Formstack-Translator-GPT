@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Footer = styled.footer`
   height: 24rem;
   width: 100%;
-  background-color: var(--formstack-slate-500);
+  background-color: var(--formstack-slate-300);
 `;
 
 export const LogosContainer = styled.div`

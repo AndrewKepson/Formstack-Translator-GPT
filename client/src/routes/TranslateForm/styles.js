@@ -62,6 +62,13 @@ export const TranslationContainer = styled.section`
   }
 `;
 
+export const TranslationDisplay = styled.div`
+  margin: 0 2rem 2rem;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--formstack-shadow);
+`;
+
 export const FormFieldsContainer = styled.section`
   display: flex;
   flex-direction: column;
@@ -69,6 +76,11 @@ export const FormFieldsContainer = styled.section`
   padding: 0 2rem;
   width: 90%;
   text-align: left;
+
+  h1 {
+    position: relative;
+    left: 2rem;
+  }
 `;
 
 export const Container = styled.section`

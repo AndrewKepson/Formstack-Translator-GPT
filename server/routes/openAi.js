@@ -15,7 +15,7 @@ router
         try {
             const chatCompletion = await openai.chat.completions.create({
                 messages: [
-                    { role: "user", content: "Translate this into spanish: Say this is a test" },
+                    { role: "user", content: "Translate this into Spanish: This is a test" },
                 ],
                 model: "gpt-3.5-turbo",
             });
@@ -35,7 +35,7 @@ router
                 messages: [
                     {
                         role: "user",
-                        content: `Translate the following phrase from English into ${language}: ${translationText}. Return only the translated text with matching punctuation.`,
+                        content: `Translate the following phrase into ${language} and respond with only the translated text.: ${translationText}.`,
                     },
                 ],
                 model: "gpt-3.5-turbo",
